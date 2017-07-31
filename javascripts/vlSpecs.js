@@ -99,7 +99,7 @@ let statesSpec = {
               "#870b00"
             ]
           },
-          "legend": false
+          "legend": true
         }
       }
     },
