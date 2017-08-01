@@ -7,7 +7,7 @@ let popSpec = {
     "url":
       "../data/pop_data.json"
   },
-  "mark": "area",
+  "mark": "bar",
   "encoding": {
     "x": {
       "field": "year",
@@ -21,14 +21,40 @@ let popSpec = {
       "field": "population",
       "type": "quantitative",
       "axis": {
-        "title": "Population (Millions)"
-      },
+        "title": "Population"
+      }
     },
     "color": {
       "field": "Population Type",
       "type": "nominal",
     }
   }
+};
+
+
+let popOptions= {
+  mode: "vega-lite",
+  actions: false,
+  padding: {
+    "top": 300,
+    "bottom": 300,
+    "left": 0,
+    "right": 50
+  },
+  showAllFields : false,
+  fields : [
+    {
+      field: "year",
+      title: "Year"
+    },
+    {
+      field: "population",
+      title: "Population"
+    },
+    {
+      field: 'Population Type'
+    }
+  ]
 };
 
 let suicideSpec = {
@@ -40,7 +66,7 @@ let suicideSpec = {
     "url":
       "../data/suicides_data.json"
   },
-  "mark": "area",
+  "mark": "bar",
   "encoding": {
     "x": {
       "field": "year",
@@ -54,7 +80,7 @@ let suicideSpec = {
       "field": "suicides",
       "type": "quantitative",
       "axis": {
-        "title": "# of Suicides (Thousands)"
+        "title": "# of Suicides"
       }
     },
     "color": {
@@ -64,15 +90,50 @@ let suicideSpec = {
   }
 };
 
+let rateOptions= {
+  mode: "vega-lite",
+  actions: false,
+  padding: {
+    "top": 300,
+    "bottom": 300,
+    "left": 0,
+    "right": 50
+  },
+  showAllFields : false,
+  fields : [
+    {
+      field: "year",
+      title: "Year"
+    },
+    {
+      field: 'suicides',
+      title: '# of Suicides'
+    },
+    {
+      field: 'Suicide Type',
+    }
+  ]
+};
+
 // from https://bl.ocks.org/peterschretlen/536aacadea83be46c4660fe909b3cacf
 let statesSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
-  "description": "A simple bar chart with embedded data.",
+  "description": "A map of the US with suicide data",
   "width": 600,
   "height": -420,
   "data": {
     "url": "../data/rates_by_state.json"
   },
+  "transform": [
+    {
+      "calculate": "1/datum.vet_rate",
+      "as": "textColor"
+    },
+    {
+      "calculate": "datum.vet_rate/datum.civ_rate",
+      "as": "Relative Severity"
+    }
+  ],
   "layer": [
     {
       "mark": "rect",
@@ -88,28 +149,21 @@ let statesSpec = {
           "axis": false
         },
         "color": {
-          "aggregate": "sum",
-          "field": "vet_rate",
+          "field": "Relative Severity",
           "type": "quantitative",
           "scale": {
             "nice": true,
-            "zero": true,
+            "zero": false,
             "range": [
-              "#eee",
+              "#ffffff",
               "#870b00"
             ]
           },
-          "legend": false
+          "legend": true
         }
       }
     },
     {
-      "transform": [
-        {
-          "calculate": "round(1-datum.vet_rate)",
-          "as": "textcolor"
-        }
-      ],
       "mark": "text",
       "encoding": {
         "x": {
@@ -123,7 +177,7 @@ let statesSpec = {
           "axis": false
         },
         "color": {
-          "field": "textcolor",
+          "field": "textColor",
           "type": "quantitative",
           "legend": false
         },
@@ -144,8 +198,8 @@ let statesSpec = {
   }
 };
 
-let popOptions= {
-  mode: "vega-lite",
+
+let stateOptions = {
   actions: false,
   padding: {
     "top": 300,
@@ -155,48 +209,10 @@ let popOptions= {
   },
   showAllFields : false,
   fields : [
-
     {
-      field: 'population',
-      title: 'Population (in Millions)',
+      field: 'state_full',
+      title: 'State'
     },
-    {
-      field: 'Population Type'
-    }
-  ]
-};
-
-let rateOptions= {
-  mode: "vega-lite",
-  actions: false,
-  padding: {
-    "top": 300,
-    "bottom": 300,
-    "left": 0,
-    "right": 50
-  },
-  showAllFields : false,
-  fields : [
-    {
-      field: 'suicides',
-      title: '# of Suicides (in Thousands)'
-    },
-    {
-      field: 'Suicide Type',
-    }
-  ]
-};
-
-let opt2 = {
-  actions: false,
-  padding: {
-    "top": 300,
-    "bottom": 300,
-    "left": 0,
-    "right": 50
-  },
-  showAllFields : false,
-  fields : [
     {
       field: 'vet_rate',
       title: 'Veteran Rate'
@@ -207,3 +223,4 @@ let opt2 = {
     }
   ]
 };
+
