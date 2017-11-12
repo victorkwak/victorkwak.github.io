@@ -80,7 +80,7 @@ let suicideSpec = {
       "field": "suicides",
       "type": "quantitative",
       "axis": {
-        "title": "# of Suicides"
+        "title": "# of Suicides (per 100,000)"
       }
     },
     "color": {
@@ -107,7 +107,7 @@ let rateOptions= {
     },
     {
       field: 'suicides',
-      title: '# of Suicides'
+      title: '# of Suicides (per 100,000)'
     },
     {
       field: 'Suicide Type',
