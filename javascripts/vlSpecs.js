@@ -49,7 +49,7 @@ let popOptions= {
     },
     {
       field: "population",
-      title: "Population"
+      title: "Population (in millions)"
     },
     {
       field: 'Population Type'
