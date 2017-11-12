@@ -21,7 +21,7 @@ let popSpec = {
       "field": "population",
       "type": "quantitative",
       "axis": {
-        "title": "Population"
+        "title": "Population (in millions)"
       }
     },
     "color": {
